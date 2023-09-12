@@ -1,0 +1,23 @@
+li{
+    display: flex;
+    justify-content: space-around;
+}
+ul{
+    margin-right: 12.5rem!important;
+}
+.form-control{
+    width:200px;
+    height: 30px;
+}
+.form{
+    display: flex;
+    width: 80%;
+    height: 50px;
+    font-size: large;
+    justify-content: center;
+    font-style: oblique;
+
+}
+.save{
+    height: 30px;
+}

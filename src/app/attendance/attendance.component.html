@@ -1,0 +1,81 @@
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="../../assets/download (4).jpg" alt="" width="60" height="44"
+                class="d-inline-block align-text-top">
+            PSN ENGINEERING COLLEGE
+        </a>
+        <ul class="tabs d-flex me-6">
+            <li *ngFor="let selected of tabs" class="pe-4 me-4 no-text-decoration">
+                <a style="cursor: pointer;"
+                    [ngClass]="selectedTab == selected ? 'nav-link active  no-text-decoration' : 'nav-link'"
+                    aria-current="tabs" (click)="selpages(selected)">
+                    {{ selected }}
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div *ngIf="selectedTab=='attendance'">
+    <input type="date" [(ngModel)]="formData.date">
+    <table class="table table-stripped  container">
+        <thead>
+            <tr>
+                <th class="col-5">REG.No</th>
+                <th class="col-5">NAME</th>
+                <th class="2">ACTION</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let data of datas  let i = index" >
+        <tr>
+            <td>{{data.roll| json}}</td>
+            <td>{{data.name| json}}</td>
+            <td>Present<input   type="checkbox"     [(ngModel)]="formData.action" 
+                > </td>
+        </tr>
+        </tbody>
+        <button (click)="onSubmit()" >Submit</button>
+    </table>
+</div>
+<div *ngIf="selectedTab=='details'">
+    <div class="container form pt-2">
+        <label>NAME</label>
+    <input type="text"  class="form-control" [(ngModel)]="detail.name">
+    <label>REG.NO</label>
+    <input type="text"  class="form-control" [(ngModel)]="detail.roll">
+    <label>YEAR</label>
+    <input type="text"  class="form-control" [(ngModel)]="detail.year">
+    <button (click)="save()" class="btn save ms-2 btn-primary">Save</button>
+</div>
+    <table class="table table-stripped  container">
+        <thead>
+            <tr>
+                <th  class="col-5">Reg.no</th>
+                <th  class="col-5">Name</th>
+                <th  class="col-2">YEAR</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let data of datas  ">
+            <tr >
+               <td>{{data.roll| json}}</td> 
+               <td>{{data.name| json}}</td>
+               <td>{{data.year| json}}</td>
+            </tr>
+        </tbody>
+
+
+    </table>
+      
+</div>
+ <!-- <form (ngSubmit)="onSubmit()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" [(ngModel)]="formData.name" required>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" [(ngModel)]="formData.email" required>
+    <input type="date" id="date" [(ngModel)]="formData.date " name="date" required>
+    
+    <button type="submit">Submit</button>
+  </form>
+  <input type="date" id="date" [(ngModel)]="formData.dates " name="date" required>
+  <button type="submit" (click)="getData()">Modify</button> -->
