@@ -5,47 +5,97 @@
                 class="d-inline-block align-text-top">
             PSN ENGINEERING COLLEGE
         </a>
-        <ul class="tabs d-flex me-6">
+        <input *ngIf="show" type="date" [(ngModel)]="date" id="datepicker" class="form-control" (change)="getData()">
+        <select class="form-select form-select-lg mb-3" *ngIf="select" aria-label=".form-select-lg example"  (change)=" onSelectionChange()" [(ngModel)]="selectyear" >
+       
+          <option value="SECOND YEAR" selected >SECOND</option>
+          <option value="THIRD YEAR">THIRD</option>
+          <option value="FINAL YEAR">FINAL</option>
+        </select>
+        <select class="form-select form-select-lg mb-3" *ngIf=" SELECTATTEND" aria-label=".form-select-lg example"  [(ngModel)]="filters" (change)=" onSelectionChange()" >
+          <option value="1" selected >ALL</option>
+          <option value="2"  >SECOND</option>
+          <option value="3">THIRD</option>
+          <option value="4">FINAL</option>
+        </select>
+      
+        <ul class="tabs d-flex me-6" >
             <li *ngFor="let selected of tabs" class="pe-4 me-4 no-text-decoration">
-                <a style="cursor: pointer;"
+                <a style="cursor: pointer;" 
                     [ngClass]="selectedTab == selected ? 'nav-link active  no-text-decoration' : 'nav-link'"
-                    aria-current="tabs" (click)="selpages(selected)">
+                    aria-current="tabs" (click)="selpages(selected)" (click)="shows()">
                     {{ selected }}
                 </a>
             </li>
         </ul>
     </div>
 </nav>
-<div *ngIf="selectedTab=='attendance'">
-    <input type="date" [(ngModel)]="formData.date">
-    <table class="table table-stripped  container">
+    
+    <div *ngIf="selectedTab=='HOME'" >
+
+    <table class="table table-stripped  container" id="ATTENDANCE">
         <thead>
             <tr>
                 <th class="col-5">REG.No</th>
                 <th class="col-5">NAME</th>
+                <th  class="col-2">YEAR</th>
+
                 <th class="2">ACTION</th>
             </tr>
         </thead>
-        <tbody *ngFor="let data of datas  let i = index" >
+        <tbody *ngFor="let data of datas" >
         <tr>
-            <td>{{data.roll| json}}</td>
-            <td>{{data.name| json}}</td>
-            <td>Present<input   type="checkbox"     [(ngModel)]="formData.action" 
-                > </td>
+            <td>{{data.roll}}</td>
+            <td>{{data.name}}</td>
+            <td>{{data.year}}</td>
+            <td>{{data.action}}</td>
+           
         </tr>
         </tbody>
-        <button (click)="onSubmit()" >Submit</button>
+    <button  (click)="download()" class="DOWNLOAD">DOWNLOAD</button>
+
     </table>
+    <div>
+      <table class="table table-stripped  container" id="ATTENDANCEABSENT">
+        <thead>
+            <tr>
+                <th class="col-5">REG.No</th>
+                <th class="col-5">NAME</th>
+                <th  class="col-2">YEAR</th>
+    
+                <th class="2">ACTION</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let data of absent" >
+        <tr>
+            <td>{{data.roll}}</td>
+            <td>{{data.name}}</td>
+            <td>{{data.year}}</td>
+            <td>{{data.action}}</td>
+           
+        </tr>
+        </tbody>
+    <button  (click)="downloadabsent()" class="DOWNLOAD">DOWNLOAD</button>
+    
+    </table>
+    </div>
 </div>
-<div *ngIf="selectedTab=='details'">
+
+<div *ngIf="selectedTab=='ATTENDANCE'">
+  
     <div class="container form pt-2">
+        <label>DATE</label>
+        <input type="date" [(ngModel)]="attDate" class="form-control">
         <label>NAME</label>
-    <input type="text"  class="form-control" [(ngModel)]="detail.name">
+    <input type="text"  class="form-control" [(ngModel)]="detail.name" >
     <label>REG.NO</label>
-    <input type="text"  class="form-control" [(ngModel)]="detail.roll">
+    <input type="text"  class="form-control"  name="roll" [(ngModel)]="detail.roll" (input)="populateFields(date)" >
     <label>YEAR</label>
     <input type="text"  class="form-control" [(ngModel)]="detail.year">
+    <label>Action</label>
+    <input type="checkbox" value="false" name="action" [(ngModel)]="detail.action">
     <button (click)="save()" class="btn save ms-2 btn-primary">Save</button>
+
 </div>
     <table class="table table-stripped  container">
         <thead>
@@ -55,27 +105,51 @@
                 <th  class="col-2">YEAR</th>
             </tr>
         </thead>
-        <tbody *ngFor="let data of datas  ">
+        <tbody *ngFor="let dat of info  ">
             <tr >
-               <td>{{data.roll| json}}</td> 
-               <td>{{data.name| json}}</td>
-               <td>{{data.year| json}}</td>
+               <td>{{dat.reg_no}}</td> 
+               <td>{{dat.name}}</td>
+               <td>{{dat.year}}</td>
             </tr>
         </tbody>
 
 
     </table>
-      
+    
 </div>
- <!-- <form (ngSubmit)="onSubmit()">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" [(ngModel)]="formData.name" required>
-    
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" [(ngModel)]="formData.email" required>
-    <input type="date" id="date" [(ngModel)]="formData.date " name="date" required>
-    
-    <button type="submit">Submit</button>
-  </form>
-  <input type="date" id="date" [(ngModel)]="formData.dates " name="date" required>
-  <button type="submit" (click)="getData()">Modify</button> -->
+<div  *ngIf="selectedTab=='DETAILS'">
+    <div class="mt-4 pt-4 d-flex justify-content-center align-items-center">
+        <div class="container">
+          <div class="row d-flex justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+              <div class="border border-3 border-primary"></div>
+              <div class="card bg-white shadow-lg">
+                <div class="card-body p-5">
+                  <!-- <form class="mb-3 "> -->
+                    <h2 class="fw-bold mb-2 text-uppercase ">ADD STUDENT DETAILS</h2>
+                    <div class="mb-3">
+                      <label for="REG.NO" class="form-label ">REG.NO</label>
+                      <input type="text" class="form-control" id="REG.NO" [(ngModel)]="user.reg_no">
+                    </div>
+                    <div class="mb-3">
+                        <label for="NAME" class="form-label ">NAME</label>
+                        <input type="text" class="form-control" id="NAME" [(ngModel)]="user.name">
+                      </div>
+                    <div class="mb-3">
+                      <label for="YEAR" class="form-label ">YEAR</label>
+                      <input type="text" class="form-control" id="YEAR" [(ngModel)]="user.year">
+                    </div>
+                    <div class="d-grid">
+                      <button class="btn btn-outline-dark" type="submit" (click)="selyear()">SUBMIT</button>
+                    </div>
+                  <!-- </form> -->
+
+      
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+</div>

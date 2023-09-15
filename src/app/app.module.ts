@@ -7,6 +7,10 @@ import{AngularFireModule} from '@angular/fire'
 import { environment } from 'src/environments/environment';
 import { AttendanceComponent } from './attendance/attendance.component';
 // import {AngulatFirestoreModule} from '@angular/fire'
+import{DatePipe} from '@angular/common'
+import 'popper.js';
+import 'bootstrap/dist/js/bootstrap.js';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -17,9 +21,9 @@ import { AttendanceComponent } from './attendance/attendance.component';
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    FormsModule,ReactiveFormsModule
+    FormsModule,ReactiveFormsModule,NgbModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { } 

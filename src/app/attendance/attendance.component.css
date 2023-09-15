@@ -3,12 +3,9 @@ li{
     justify-content: space-around;
 }
 ul{
-    margin-right: 12.5rem!important;
+    margin-right: 5.5rem!important;
 }
-.form-control{
-    width:200px;
-    height: 30px;
-}
+
 .form{
     display: flex;
     width: 80%;
@@ -20,4 +17,16 @@ ul{
 }
 .save{
     height: 30px;
+}
+#datepicker{
+    width: 200px;
+    height: 40px;
+}
+select{
+    width: 200px;
+    height: 50px;
+}
+.DOWNLOAD{
+    display: grid;
+    place-content: center;
 }
